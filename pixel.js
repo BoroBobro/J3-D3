@@ -1,23 +1,21 @@
-const API_KEY = '5wkRzl5NJbSpAib6zTIdX7Z0COZe1lX9r8vvtbWgETsYhPtlTpCLdeuQ'
+const API_KEY = '5wkRzl5NJbSpAib6zTIdX7Z0COZe1lX9r8vvtbWgETsYhPtlTpCLdeuQ';
 
-const loadImage = (query = 'nature') => {
-    fetch('https://api.pexels.com/v1/search?query=[your-query]'{
-        headers:{
-            Authorization: API_KEY,
-        },
+const loadImages = (query = 'nature') => {
+    fetch(`https://api.pexels.com/v1/search?query=${query}`, {
+      headers: { Authorization: API_KEY },
     })
-    .then((res) => res.json())
-    .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         renderCards(data.photos);
-    });
-};
+      });
+  };
 
 const renderCards = (photos) => {
-    const row = document.querySelector('.album .row');
+    const row = document.querySelector(`.album .row`);
     row.innerHTML = '';
 
 photos.forEach ((photo) =>{
-    const col = document.createElement('div');
+    const col = document.createElement(`div`);
     col.className = 'col-md-4';
     col.innerHTML = `
       <div class="card mb-4 shadow-sm">
@@ -35,10 +33,10 @@ photos.forEach ((photo) =>{
         </div>
       </div>
     `;
-    col.querySelector('img').addEventListener('click',() => {
-        window.location.href = 'detail.html?id=${photo.id}';
+    col.querySelector(`img`).addEventListener(`click`,() => {
+        window.location.href = `detail.html?id=${photo.id}`;
     });
-    col.querySelector('card-title').addEventListener('click',() =>{
+    col.querySelector('.card-title').addEventListener(`click`,() =>{
         window.location.href = 'detail.html?id=${photo.id}';
     });
     col.querySelector('.hide-btn').addEventListener('click', () => {
@@ -59,9 +57,18 @@ document.querySelector('.btn-secondary').addEventListener('click', () => {
 
 const searchContainer = document.createElement('div');
 searchContainer.className = 'my-3';
-searchContainer.innerHTML = `laceholder="Search images..." class="form-control" />
+searchContainer.innerHTML = `
+  <input id="searchInput" type="text" placeholder="Search images..." class="form-control" />
   <button id="searchBtn" class="btn btn-success mt-2">Search</button>
 `;
 
 document.querySelector(`.jumbotron .container`).appendChild(searchContainer);
 
+document.getElementById(`searchBtn`).addEventListener(`click`, () => {
+    const query = document.getElementById(`searchInput`).value;
+    if(query){
+        loadImages(query);
+    }
+});
+
+loadImages();

@@ -49,11 +49,19 @@ photos.forEach ((photo) =>{
   });
 };
 
-document.querySelector('.btn-primary').addEventListener('click', () => {
+document.querySelector(`.btn-primary`).addEventListener('click', () => {
     loadImage('nature');
 });
 document.querySelector('.btn-secondary').addEventListener('click', () => {
     loadImage('city');
 });
 
+
+const searchContainer = document.createElement('div');
+searchContainer.className = 'my-3';
+searchContainer.innerHTML = `laceholder="Search images..." class="form-control" />
+  <button id="searchBtn" class="btn btn-success mt-2">Search</button>
+`;
+
+document.querySelector(`.jumbotron .container`).appendChild(searchContainer);
 
